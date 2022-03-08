@@ -17,7 +17,7 @@ jobs:
 
       - uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::076990480424:role/lambda-gcs
+          role-to-assume: ${{ secrets.AWS_ASSUME_ROLE }}
           aws-region: us-east-1
 
       - name: Login to Public ECR
@@ -34,4 +34,4 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t public.ecr.aws/$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push public.ecr.aws/$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
